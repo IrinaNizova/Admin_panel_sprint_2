@@ -1,0 +1,18 @@
+INFO:root:Get 28 films from genre
+INFO:root:Post 43633 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 13 films from person
+INFO:root:Post 19736 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 100 films from film
+INFO:root:Post 136468 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 100 films from film
+INFO:root:Post 136468 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 28 films from genre
+INFO:root:Post 43633 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 13 films from person
+INFO:root:Post 19736 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 100 films from film
+INFO:root:Post 136468 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 28 films from genre
+INFO:root:Post 43633 records in url http://127.0.0.1:9200/_bulk
+INFO:root:Get 13 films from person
+INFO:root:Post 19736 records in url http://127.0.0.1:9200/_bulk

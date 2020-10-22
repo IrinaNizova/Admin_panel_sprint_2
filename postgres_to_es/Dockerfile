@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8.3-alpine
+FROM python:3.8.3-alpine as etl
 
 # set work directory
 WORKDIR /usr/src/app
@@ -14,4 +14,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy project
-COPY . .
+COPY postgres_to_es .
+
+RUN python loader.py
