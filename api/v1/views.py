@@ -34,13 +34,13 @@ class MoviesDetailApi(MoviesApiMixin, BaseDetailView):
         try:
             results = self.get_queryset().filter(id=uuid).values()
         except ValidationError:
-            raise Http404(f"Do not find film with uuid {uuid}")
+            raise Http404(f"Could not find a film with uuid {uuid}")
         if not results:
-            raise Http404(f"Do not find film with uuid {uuid}")
+            raise Http404(f"Could not find a film with uuid {uuid}")
         return results
 
     def get_context_data(self, **kwargs):
-        return list(self.get_object())[0]
+        return self.get_object().first()
 
 
 class MoviesListApi(MoviesApiMixin, BaseListView):
@@ -49,22 +49,12 @@ class MoviesListApi(MoviesApiMixin, BaseListView):
 
     def get_context_data(self, **kwargs):
         paginator, page, queryset, is_paginated = self.paginate_queryset(list(self.get_queryset()), self.paginate_by)
-        total_pages = round(self.get_queryset().count() / self.paginate_by)
-        page = self.request.GET.get('page')
-        if not page:
-            next = 2
-            prev = None
-        elif page == total_pages or page == 'last':
-            next = None
-            prev = total_pages - 1
-        else:
-            next = int(page) + 1
-            prev = int(page) - 1
+
         return {
             'results': queryset,
             'count': self.get_queryset().count(),
-            'total_pages': total_pages,
-            'prev': prev,
-            'next': next
+            'total_pages': paginator.num_pages,
+            'prev': page.previous_page_number() if page.has_previous() else None,
+            'next': page.next_page_number() if page.has_next() else None
         }
 

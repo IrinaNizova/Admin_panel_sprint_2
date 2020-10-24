@@ -9,8 +9,9 @@ import psycopg2
 from psycopg2.extensions import connection as _connection
 from psycopg2.extras import DictCursor
 
-from postgres_to_es import sql_request, config
-from postgres_to_es.state import JsonFileStorage
+from state import JsonFileStorage
+import sql_request
+import config
 
 
 logging.basicConfig(filename='loader.log', level=logging.INFO)
