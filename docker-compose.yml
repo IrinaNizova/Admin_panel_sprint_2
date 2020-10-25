@@ -35,3 +35,5 @@ volumes:
 
 networks:
   default:
+    external:
+      name: movie-network

@@ -7,6 +7,7 @@ from django.http.response import Http404
 from django.core.exceptions import ValidationError
 
 from movies.models import Filmwork
+from config.settings.base import ITEMS_ON_PAGE
 
 
 class MoviesApiMixin:
@@ -18,8 +19,8 @@ class MoviesApiMixin:
         writers = ArrayAgg('members__full_name', distinct=True, filter=Q(membership__role='writer'))
         director = ArrayAgg('members__full_name', distinct=True, filter=Q(membership__role='director'))
         genres = ArrayAgg('genre_types__name', distinct=True)
-        return self.model.objects.prefetch_related('genre_types', 'members').\
-            annotate(actors=actors, writers=writers, directors=director, genres=genres).all().values()
+        return (self.model.objects.annotate(actors=actors, writers=writers, directors=director, genres=genres)
+                .all().values())
 
     def render_to_response(self, context, **response_kwargs):
         return JsonResponse(context, safe=False)
@@ -45,7 +46,7 @@ class MoviesDetailApi(MoviesApiMixin, BaseDetailView):
 
 class MoviesListApi(MoviesApiMixin, BaseListView):
 
-    paginate_by = 50
+    paginate_by = ITEMS_ON_PAGE
 
     def get_context_data(self, **kwargs):
         paginator, page, queryset, is_paginated = self.paginate_queryset(list(self.get_queryset()), self.paginate_by)
